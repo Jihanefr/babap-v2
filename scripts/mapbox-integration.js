@@ -76,24 +76,73 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Add markers for each stop
+        // Add markers for each stop with detailed information
         const stops = [
-            { coordinates: [3.0588, 36.7538], name: 'Alger' },
-            { coordinates: [2.1978, 36.6769], name: 'Cherchell' },
-            { coordinates: [2.4419, 36.5892], name: 'Tipaza' },
-            { coordinates: [9.4916, 24.5536], name: 'Djanet' },
-            { coordinates: [9.5000, 24.5000], name: 'Tilalen' },
-            { coordinates: [9.4500, 24.5000], name: 'Essendilène' },
-            { coordinates: [9.4000, 24.4500], name: 'Erg Admer' }
+            { 
+                coordinates: [2.3522, 48.8566],
+                name: "Paris",
+                day: "1",
+                description: "Départ pour Alger"
+            },
+            { 
+                coordinates: [3.0588, 36.7538],
+                name: "Alger",
+                day: "1-4",
+                description: "Jour 1: Arrivée et découverte de la ville<br>Jour 2: Visite de la Kasbah, Palais de la Régence, Mosquée Ketchaoua<br>Jour 4: Visite du Mémorial des Martyrs, Jardin d'Essai du Hamma, Musée National des Beaux-Arts"
+            },
+            { 
+                coordinates: [2.1978, 36.6769],
+                name: "Cherchell",
+                day: "3",
+                description: "Exploration du parc archéologique: théâtre antique, forum, thermes et musée"
+            },
+            { 
+                coordinates: [2.4419, 36.5892],
+                name: "Tipaza",
+                day: "3",
+                description: "Site UNESCO avec vestiges romains: temples, théâtre, forum, basilique chrétienne. Visite de la Villa des Fresques"
+            },
+            { 
+                coordinates: [9.4916, 24.5536],
+                name: "Djanet",
+                day: "5",
+                description: "Découverte du marché local: bijoux touaregs, étoffes traditionnelles et épices"
+            },
+            { 
+                coordinates: [9.5000, 24.5000],
+                name: "Tilalen",
+                day: "5",
+                description: "Expédition en 4x4, site archéologique avec gravures rupestres"
+            },
+            { 
+                coordinates: [9.4500, 24.5000],
+                name: "Essendilène",
+                day: "6",
+                description: "Randonnée aux guelta (bassins naturels) entourés de falaises majestueuses"
+            },
+            { 
+                coordinates: [9.4000, 24.4500],
+                name: "Erg Admer",
+                day: "6",
+                description: "Mer de dunes à perte de vue, coucher de soleil et nuit sous les étoiles"
+            }
         ];
 
         stops.forEach(stop => {
             const marker = document.createElement('div');
             marker.className = 'marker';
             
+            const popupContent = `
+                <div class="popup-content">
+                    <h3>${stop.name}</h3>
+                    <div class="day-number">Jour ${stop.day}</div>
+                    <div class="description">${stop.description}</div>
+                </div>
+            `;
+            
             new mapboxgl.Marker(marker)
                 .setLngLat(stop.coordinates)
-                .setPopup(new mapboxgl.Popup().setHTML(`<h3>${stop.name}</h3>`))
+                .setPopup(new mapboxgl.Popup({ maxWidth: '300px' }).setHTML(popupContent))
                 .addTo(map);
         });
     });

@@ -708,15 +708,34 @@ body {
 }
 
 .mapboxgl-popup-content {
-    text-align: center;
+    text-align: left;
     font-family: 'Open Sans', sans-serif;
-    padding: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.mapboxgl-popup-content h3 {
-    margin: 0;
+.popup-content h3 {
+    margin: 0 0 8px 0;
     color: #333;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 2px solid #008f84;
+    padding-bottom: 5px;
+}
+
+.day-number {
+    color: #008f84;
+    font-weight: bold;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.description {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #666;
+    margin-top: 8px;
 }
 
 /* Weather Section in Popup */
