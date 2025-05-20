@@ -1,0 +1,1840 @@
+:root {
+    --primary-color: #174425;
+    --accent-color: #CCAC75;
+    --text-color: #333;
+    --light-text: #666;
+    --background: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.map-container {
+    position: relative;
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.chat-container {
+    background-color: #2d2d2d;
+    border-left: 1px solid #3d3d3d;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 300px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    scroll-behavior: smooth;
+}
+
+.message {
+    margin-bottom: 16px;
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
+.message.user {
+    background-color: #00a699;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+.message.ai {
+    background-color: #2d2d2d;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+.message a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.message a:hover {
+    text-decoration: underline;
+}
+
+.message strong {
+    color: var(--accent-color);
+}
+
+.message.typing {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 8px 16px;
+}
+
+.message.typing::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--text-color);
+    border-radius: 50%;
+    animation: typing 1s infinite;
+    margin-left: 4px;
+}
+
+@keyframes typing {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+.chat-input-container {
+    padding: 15px;
+    border-top: 1px solid #3d3d3d;
+    background-color: #2d2d2d;
+}
+
+#chatInput {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #3d3d3d;
+    border-radius: 12px;
+    background-color: #1a1a1a;
+    color: white;
+    resize: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+#chatInput:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+#sendMessage {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+#sendMessage:hover {
+    background-color: #008f84;
+}
+
+/* Chat Suggestions */
+.chat-suggestions {
+    padding: 10px;
+    border-top: 1px solid #3d3d3d;
+}
+
+.suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.suggestion-chips button {
+    background-color: #1a1a1a;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.suggestion-chips button:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4d4d4d;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5d5d5d;
+}
+
+/* Carousel Styles */
+.mapboxgl-popup-content {
+    background: rgba(45, 45, 45, 0.95);
+    color: white;
+    border-radius: 8px;
+    padding: 0;
+    max-width: 320px;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+}
+
+.carousel-slide {
+    display: none;
+    width: 100%;
+}
+
+.carousel-slide.active {
+    display: block;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background: white;
+}
+
+.location-info {
+    padding: 16px;
+    background-color: #2d2d2d;
+    border-radius: 12px;
+    margin-top: 12px;
+}
+
+.location-info h3 {
+    color: var(--text-color);
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+.location-info p {
+    color: #b3b3b3;
+    margin-bottom: 12px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.book-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-button:hover {
+    background-color: #008f84;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.book-trip-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 16px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.book-trip-button:hover {
+    background-color: #008f84;
+}
+
+/* Map Controls Container */
+.map-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Route Planner */
+.route-planner {
+    flex: 1;
+    background: rgba(45, 45, 45, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.route-planner h3,
+.weather-controls h3 {
+    color: var(--text-color);
+    margin: 0 0 15px 0;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.route-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.location-input {
+    display: flex;
+    gap: 10px;
+}
+
+.location-input input {
+    flex: 1;
+    padding: 8px;
+    background: #2d2d2d;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+}
+
+.transport-modes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.transport-btn {
+    padding: 10px 20px;
+    background: #2d2d2d;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.2em;
+}
+
+.transport-btn:hover {
+    background: var(--accent-color);
+}
+
+.transport-btn.active {
+    background: var(--accent-color);
+}
+
+.route-info {
+    padding: 10px;
+    background: #2d2d2d;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: none;
+}
+
+.route-info.visible {
+    display: block;
+}
+
+.route-info p {
+    margin: 5px 0;
+    color: var(--text-color);
+}
+
+.route-info .route-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--accent-color);
+}
+
+/* Routing Button */
+.route-button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--accent-color);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.route-button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* Update popup styling for routing button */
+.location-popup .mapboxgl-popup-content {
+    min-width: 250px;
+}
+
+/* Weather Controls */
+.weather-controls {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 0.85em;
+}
+
+.weather-controls h3 {
+    color: black;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.weather-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.weather-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--accent-color);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.weather-buttons button:hover {
+    background-color: #008f84;
+    transform: translateY(-1px);
+}
+
+/* Weather Info Panel */
+#weather-info {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+    width: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 0.85em;
+}
+
+#weather-info h3 {
+    color: black;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+#weather-details {
+    color: black;
+    font-size: 0.9em;
+    line-height: 1.2;
+}
+
+.weather-info-container {
+    color: black;
+    font-size: 0.85em;
+    margin: 0;
+    padding: 0;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.weather-details {
+    display: grid;
+    gap: 3px;
+    font-size: 0.8em;
+}
+
+.weather-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
+}
+
+.weather-detail .label {
+    color: black;
+    font-weight: bold;
+}
+
+.weather-detail .value {
+    color: black;
+    font-weight: normal;
+}
+
+.loading {
+    text-align: center;
+    color: #b3b3b3;
+    font-style: italic;
+    padding: 8px 0;
+    font-size: 1.1em;
+}
+
+/* Weather Popup Styles */
+.weather-popup {
+    padding: 15px;
+    min-width: 250px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 12px;
+}
+
+.weather-icon {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.weather-main {
+    flex: 1;
+}
+
+.weather-main .temperature {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.weather-main .description {
+    font-size: 14px;
+    color: #666;
+    text-transform: capitalize;
+}
+
+.weather-details {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+.weather-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.weather-row span:first-child {
+    color: #666;
+}
+
+.weather-row span:last-child {
+    font-weight: 500;
+    color: #333;
+}
+
+.weather-loading {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.weather-error {
+    padding: 15px;
+    text-align: center;
+    color: #dc3545;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Override Mapbox popup styles */
+.mapboxgl-popup-content {
+    padding: 0 !important;
+    border-radius: 8px !important;
+}
+
+.mapboxgl-popup-close-button {
+    right: 5px !important;
+    top: 5px !important;
+    color: #666 !important;
+    font-size: 20px !important;
+    padding: 5px !important;
+}
+
+/* Directions Control */
+.mapboxgl-ctrl-directions {
+    max-width: 300px;
+    background: #2d2d2d !important;
+    color: var(--text-color) !important;
+}
+
+.directions-control-inputs {
+    background: #2d2d2d !important;
+}
+
+.mapboxgl-ctrl-directions input {
+    background: #1a1a1a !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--accent-color) !important;
+}
+
+.mapboxgl-ctrl-directions .directions-icon {
+    background-color: var(--accent-color) !important;
+}
+
+/* Country Highlight */
+.country-highlight {
+    cursor: pointer;
+}
+
+.country-highlight:hover {
+    fill-opacity: 0.3 !important;
+}
+
+/* Weather Section in Popup */
+.weather-section {
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(45, 45, 45, 0.5);
+    border-radius: 12px;
+}
+
+.loading {
+    text-align: center;
+    color: #b3b3b3;
+    font-style: italic;
+    padding: 10px;
+}
+
+.weather-error {
+    color: #f44336;
+    text-align: center;
+    margin: 0;
+}
+
+.weather-info-container {
+    color: black;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.weather-icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+.temperature {
+    display: flex;
+    flex-direction: column;
+}
+
+.temp-value {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.feels-like {
+    font-size: 0.85em;
+    color: #b3b3b3;
+}
+
+.weather-details {
+    display: grid;
+    gap: 4px;
+    font-size: 0.9em;
+}
+
+.weather-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
+}
+
+.weather-detail .label {
+    color: grey;
+}
+
+.weather-detail .value {
+    color: grey;
+    font-weight: 500;
+}
+
+.loading {
+    text-align: center;
+    color: #b3b3b3;
+    font-style: italic;
+    padding: 8px 0;
+    font-size: 1.1em;
+}
+
+/* Popup Container */
+.popup-container {
+    max-width: 300px;
+}
+
+/* Collapsible Sections */
+.collapsible-container {
+    margin: 10px 0;
+}
+
+.collapsible-section {
+    margin-bottom: 5px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(45, 45, 45, 0.5);
+}
+
+.collapsible-header {
+    width: 100%;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: grey;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+}
+
+.collapsible-header:hover {
+    background: rgba(204, 172, 117, 0.1);
+}
+
+.toggle-icon {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent-color);
+    transition: transform 0.3s ease;
+}
+
+.collapsible-section.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 12px;
+}
+
+.collapsible-section.active .collapsible-content {
+    padding: 8px 12px;
+    border-top: 1px solid rgba(204, 172, 117, 0.1);
+}
+
+/* Weather Info in Collapsible */
+.weather-info-container {
+    color: black;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.weather-icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+.temperature {
+    display: flex;
+    flex-direction: column;
+}
+
+.temp-value {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.feels-like {
+    font-size: 0.85em;
+    color: #b3b3b3;
+}
+
+.weather-details {
+    display: grid;
+    gap: 4px;
+    font-size: 0.9em;
+}
+
+.weather-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
+}
+
+.weather-detail .label {
+    color: grey;
+}
+
+.weather-detail .value {
+    color: grey;
+    font-weight: 500;
+}
+
+.loading {
+    text-align: center;
+    color: #b3b3b3;
+    font-style: italic;
+    padding: 8px 0;
+    font-size: 1.1em;
+}
+
+/* Update existing popup styles */
+.location-popup .mapboxgl-popup-content {
+    padding: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.location-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--text-color);
+    font-size: 1.2em;
+}
+
+/* Buttons */
+.route-button,
+.book-button {
+    margin: 10px 0 0 0;
+}
+
+/* Buttons Container */
+.buttons-container {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0 0 0;
+}
+
+.buttons-container .route-button {
+    flex: 1;
+    margin: 0;
+}
+
+/* Route Buttons */
+.route-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    text-align: center;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.route-button.end {
+    background-color: #4CAF50;
+}
+
+.route-button.circuit {
+    background-color: #2196F3;
+}
+
+.route-button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.book-button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.book-button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .app-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
+    }
+
+    .map-container {
+        height: 60vh;
+    }
+
+    .chat-container {
+        width: 100%;
+        height: 40vh;
+        border-left: none;
+        border-top: 1px solid #3d3d3d;
+    }
+
+    .weather-controls {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .weather-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .weather-buttons button {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .mapboxgl-popup-content {
+        max-width: 280px;
+    }
+
+    .carousel-container {
+        max-width: 280px;
+    }
+
+    .carousel-slide img {
+        height: 160px;
+    }
+
+    #chatInput {
+        min-height: 40px;
+    }
+
+    #sendMessage {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .map-container {
+        height: 50vh;
+    }
+
+    .chat-container {
+        height: 50vh;
+    }
+
+    .message {
+        max-width: 95%;
+        padding: 8px 12px;
+    }
+
+    .mapboxgl-popup-content {
+        max-width: 240px;
+    }
+
+    .carousel-container {
+        max-width: 240px;
+    }
+
+    .carousel-slide img {
+        height: 140px;
+    }
+
+    .weather-buttons button {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .map-controls {
+        flex-direction: column;
+        bottom: 10px;
+        width: 95%;
+    }
+
+    .route-planner,
+    .weather-controls {
+        width: 100%;
+    }
+
+    .weather-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Adjust map container */
+    #map {
+        height: 50vh;
+    }
+    
+    /* Weather Info Panel */
+    #weather-info {
+        width: 100%;
+        bottom: 0;
+        right: 0;
+    }
+    
+    /* Weather Controls */
+    .weather-controls {
+        width: 100%;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    /* Adjust buttons for mobile */
+    .buttons-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .route-button,
+    .book-button {
+        width: 100%;
+    }
+    
+    /* Popup adjustments */
+    .popup-container {
+        max-width: 90%;
+    }
+    
+    /* Adjust font sizes for readability */
+    .location-info h3,
+    .weather-header span {
+        font-size: 1em;
+    }
+    
+    .weather-detail {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .chat-suggestions {
+        padding: 8px;
+    }
+
+    .suggestion-chips button {
+        padding: 4px 10px;
+        font-size: 0.8em;
+    }
+
+    .message {
+        max-width: 90%;
+        padding: 10px 14px;
+    }
+
+    .chat-input-container {
+        padding: 10px;
+    }
+
+    #chatInput {
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    #sendMessage {
+        padding: 10px;
+    }
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+    background: #000;
+}
+
+.globe-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mapboxgl-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 104px;
+    z-index: 1000;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-text img {
+    height: 80px;
+    width: auto;
+    vertical-align: middle;
+    margin: 12px;
+}
+
+.logo-text {
+    color: #174425;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.nav-center {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-center a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-center a:hover {
+    color: #174425;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.btn-book {
+    background: #174425;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.btn-book:hover {
+    background: #1d5430;
+}
+
+/* Mapbox Controls */
+.mapboxgl-ctrl-group {
+    margin: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-ctrl-group button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+/* Features Section */
+.features {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feature-card {
+    text-align: center;
+}
+
+.feature-icon {
+    margin-bottom: 15px;
+}
+
+.feature-icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.feature-card p {
+    color: var(--light-text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Trips Section */
+.trips {
+    padding: 60px 0;
+    background: #f8f8f8;
+}
+
+.trips h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.trip-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.trip-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+}
+
+.trip-card.large {
+    grid-row: span 2;
+    height: 420px;
+}
+
+.trip-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trip-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+}
+
+.trip-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.trip-content p {
+    margin-bottom: 15px;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.price {
+    font-weight: 500;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+.btn-explore {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Mapbox Controls Styling */
+.mapboxgl-ctrl-group {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    margin-right: 15px;
+}
+
+.mapboxgl-ctrl-group button {
+    width: 26px;
+    height: 26px;
+    background-color: transparent;
+    border: none;
+}
+
+.mapboxgl-ctrl-group button:not(:first-child) {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-ctrl-group button:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.why-us {
+    padding: 80px 0;
+    text-align: center;
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.why-us h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.why-us p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.btn-read-more {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #c8aa6e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-read-more:hover {
+    background-color: #b39659;
+}
+
+.values {
+    padding: 80px 0;
+    background-color: #f8f8f8;
+}
+
+.values h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 50px;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.value-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.value-content {
+    padding: 25px;
+}
+
+.value-content h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.value-content p {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.btn-read {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #c8aa6e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-read:hover {
+    background-color: #b39659;
+}
+
+@media (max-width: 768px) {
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .why-us {
+        padding: 60px 20px;
+    }
+    
+    .values {
+        padding: 60px 0;
+    }
+}
+
+.footer {
+    background-color: #fff;
+    padding: 30px 0;
+    border-top: 1px solid #eee;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo {
+    height: 50px;
+    width: auto;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #c8aa6e;
+}
+
+.separator {
+    color: #ddd;
+    margin: 0 10px;
+}
+
+.footer-copyright {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-right {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .footer-logo {
+        margin-bottom: 15px;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .separator {
+        display: none;
+    }
+}
+
+.layer-controls {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.layer-btn {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.layer-btn:hover {
+    background-color: #fff;
+    transform: translateX(-5px);
+}
+
+.layer-btn.active {
+    background-color: #c8aa6e;
+    color: white;
+}
+
+.layer-btn i {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .layer-controls {
+        right: 10px;
+    }
+    
+    .layer-btn {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+}
+
+/* Weather Panel Styles */
+.weather-panel {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.weather-panel-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.weather-icon-large {
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.weather-info {
+    text-align: center;
+}
+
+.temperature-large {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.weather-details-large {
+    color: #666;
+    font-size: 14px;
+}
+
+.weather-details-large div {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Authentication Styles */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.auth-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+}
+
+.auth-links a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Navigation Bar Auth Buttons */
+.btn-login, .btn-signup {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-login {
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.btn-signup {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid transparent;
+}
+
+.btn-login:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-signup:hover {
+    background-color: #45a049;
+}
+
+.btn-login i, .btn-signup i {
+    margin-right: 0.5rem;
+}

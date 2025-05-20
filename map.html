@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BABAP - Explore the Globe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --racing-green: #174425;
+            --fern-green: #4D7646;
+            --ecru: #CCAC75;
+            --dark-grey: #333333;
+            --light-grey: #DADADA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-bar {
+            padding: 1rem 2rem;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--racing-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .control-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .primary-button {
+            background-color: var(--racing-green);
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: var(--fern-green);
+        }
+
+        .secondary-button {
+            background-color: white;
+            color: var(--racing-green);
+            border: 1px solid var(--racing-green);
+        }
+
+        .secondary-button:hover {
+            background-color: var(--light-grey);
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .weather-controls {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .weather-controls h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-grey);
+        }
+
+        .weather-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #weather-info {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-globe"></i>
+            BABAP
+        </a>
+        <div class="nav-controls">
+            <button class="control-button secondary-button" onclick="toggleWeatherInfo()">
+                <i class="fas fa-cloud-sun"></i>
+                Weather
+            </button>
+            <button class="control-button secondary-button" onclick="toggleFlightSearch()">
+                <i class="fas fa-plane"></i>
+                Flights
+            </button>
+            <a href="index.html" class="control-button primary-button">
+                <i class="fas fa-home"></i>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <div class="map-container">
+        <div id="map"></div>
+        <div class="weather-controls">
+            <h3>Weather Layers</h3>
+            <div class="weather-buttons">
+                <button onclick="toggleWeatherLayer('temp')" class="control-button secondary-button">
+                    <i class="fas fa-temperature-high"></i>
+                    Temperature
+                </button>
+                <button onclick="toggleWeatherLayer('precipitation')" class="control-button secondary-button">
+                    <i class="fas fa-cloud-rain"></i>
+                    Precipitation
+                </button>
+            </div>
+        </div>
+        <div id="weather-info">
+            <h3>Weather Information</h3>
+            <div id="weather-details">Click a location to view weather details.</div>
+        </div>
+    </div>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <script src="scripts/mapbox-integration.js"></script>
+    <script>
+        // Initialize map
+        mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [5.0, 24.5], // Centered near Djannet
+            zoom: 6
+        });
+
+        // Add navigation controls
+        map.addControl(new mapboxgl.NavigationControl());
+
+        function toggleWeatherLayer(layer) {
+            // Implementation for weather layer toggle
+        }
+
+        function toggleWeatherInfo() {
+            // Implementation for weather info toggle
+        }
+
+        function toggleFlightSearch() {
+            // Implementation for flight search toggle
+        }
+    </script>
+</body>
+</html>

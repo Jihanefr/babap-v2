@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BABAP - Travel Experiences</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="logo-text">
+                    <img src="images/top-logo.png" alt="Empakt Trips Logo">
+                </a>
+            </div>
+            <div class="nav-center">
+                <a href="https://honeydew-worm-328764.hostingersite.com/accueil/" target="_blank">Home</a>
+                <a href="https://honeydew-worm-328764.hostingersite.com/destinations/" target="_blank">Destinations</a>
+                <a href="https://honeydew-worm-328764.hostingersite.com/a-propos/" target="_blank">About</a>
+                <a href="https://honeydew-worm-328764.hostingersite.com/rentrer-en-contact/" target="_blank">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="login.html" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </a>
+                <a href="signup.html" class="btn-signup">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up
+                </a>
+                <a href="https://honeydew-worm-328764.hostingersite.com/accueil/" class="btn-book" target="_blank">
+                    <i class="fas fa-book"></i>
+                    Book now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div id="globe-container" class="globe-container"></div>
+            <div id="weather-panel" class="weather-panel">
+                <div class="weather-panel-content">
+                    <div class="weather-icon-large"></div>
+                    <div class="weather-info">
+                        <div class="temperature-large"></div>
+                        <div class="weather-details-large"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layer-controls">
+                <button class="layer-btn" id="temperature-layer">
+                    <i class="fas fa-thermometer-half"></i>
+                    Temperature
+                </button>
+                <button class="layer-btn" id="precipitation-layer">
+                    <i class="fas fa-cloud-rain"></i>
+                    Precipitation
+                </button>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>No fuss, complete trips</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/hand-picked.png" alt="Hand picked destinations">
+                    </div>
+                    <h3>Hand picked destinations</h3>
+                    <p>Tailored trips, backed by over 20 years of local knowledge</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/no-stress.png" alt="No stress travel">
+                    </div>
+                    <h3>No stress travel</h3>
+                    <p>Fully inclusive trips, from the moment you check out</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/genuine.png" alt="Genuine experiences">
+                    </div>
+                    <h3>Genuine experiences</h3>
+                    <p>Experience the hidden gems and the local passion</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/quality.png" alt="Quality nights">
+                    </div>
+                    <h3>Quality nights</h3>
+                    <p>Stay in exceptional hotels that you won't find anywhere else</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="trips">
+            <h2>Explore our most captivating trips</h2>
+            <div class="trip-grid">
+                <div class="trip-card large">
+                    <img src="images/desert.jpg" alt="Algerian Desert">
+                    <div class="trip-content">
+                        <h3>Venture into<br>the Algerian desert</h3>
+                        <p>A majestic landscape of golden dunes, ancient secrets, and endless horizons</p>
+                        <div class="price">From 1700€/p</div>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/voyage-au-coeur-algerie/" class="btn-explore" target="_blank">Explore</a>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <img src="images/malaysian-coast.jpg" alt="Malaysian Coast">
+                    <div class="trip-content">
+                        <h3>Enjoy the Malaysian coast</h3>
+                        <p>Refreshing water, great access to local culture</p>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/fabulousmalaysia/" class="btn-explore" target="_blank">Explore</a>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <img src="images/indonesia.jpg" alt="Indonesia">
+                    <div class="trip-content">
+                        <h3>Immerse in Indonesia</h3>
+                        <p>Rich culture and vibrant heritage</p>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/circuit-sumatra-nord-et-ile-de-weh/" class="btn-explore" target="_blank">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="why-us">
+            <h2>Why empakt?</h2>
+            <p>At Empakt, we believe travel should leave a lasting impression on you, not the planet. Sustainable travel is about exploring the world responsibly—supporting local communities, preserving natural wonders, and minimizing environmental impact. With precise story and quality is designed to create meaningful connections, while protecting the places that make travel so extraordinary. Travel better, travel consciously.</p>
+            <a href="https://honeydew-worm-328764.hostingersite.com/accueil/" class="btn-read-more" target="_blank">Read articles</a>
+        </section>
+
+        <section class="values">
+            <h2>Travel with positive impact</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <img src="images/locals.jpg" alt="Empower the locals">
+                    <div class="value-content">
+                        <h3>Empower the locals</h3>
+                        <p>Make a real impact, and help preserve the best you love of every destination</p>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/a-propos/" class="btn-read" target="_blank">Read more</a>
+                    </div>
+                </div>
+                <div class="value-card">
+                    <img src="images/sustainability.png" alt="Travel sustainability">
+                    <div class="value-content">
+                        <h3>Travel sustainably</h3>
+                        <p>Embrace the world with care, will protect our planet for future generations</p>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/a-propos/" class="btn-read" target="_blank">Read more</a>
+                    </div>
+                </div>
+                <div class="value-card">
+                    <img src="images/hidden-gems.jpg" alt="Discover hidden gems">
+                    <div class="value-content">
+                        <h3>Discover hidden gems</h3>
+                        <p>Uncover the world's secret treasures, waiting to be explored</p>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/destinations/" class="btn-read" target="_blank">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <img src="images/top-logo.png" alt="BABAP" class="footer-logo">
+                </div>
+                <div class="footer-right">
+                    <div class="footer-links">
+                        <a href="https://honeydew-worm-328764.hostingersite.com/privacy-policy/" target="_blank">Privacy Policy</a>
+                        <span class="separator">|</span>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/terms-and-conditions/" target="_blank">Terms & Conditions</a>
+                        <span class="separator">|</span>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/cookie-policy/" target="_blank">Cookie Policy</a>
+                        <span class="separator">|</span>
+                        <a href="https://honeydew-worm-328764.hostingersite.com/rentrer-en-contact/" target="_blank">Contact</a>
+                    </div>
+                    <div class="footer-copyright">
+                        Copyright 2024 Empakt Trips. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!mapboxgl.supported()) {
+                alert('Your browser does not support Mapbox GL');
+            }
+        });
+    </script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/mapbox-integration.js"></script>
+</body>
+</html>
