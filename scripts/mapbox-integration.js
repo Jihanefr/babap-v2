@@ -22,34 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
 
-    // Add Western Sahara mask when the map loads
+    // Hide Western Sahara label when the map loads
     map.on('load', () => {
-        map.addSource('western-sahara', {
-            'type': 'geojson',
-            'data': {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Polygon',
-                    'coordinates': [[
-                        [-17.0634, 27.6666],
-                        [-8.6656, 27.6666],
-                        [-8.6656, 20.7666],
-                        [-17.0634, 20.7666],
-                        [-17.0634, 27.6666]
-                    ]]
-                }
+        const layers = map.getStyle().layers;
+        for (const layer of layers) {
+            if (layer.type === 'symbol') {
+                map.setLayoutProperty(layer.id, 'text-field', [
+                    'case',
+                    ['==', ['get', 'name_en'], 'Western Sahara'],
+                    '',  // hide Western Sahara label
+                    ['get', 'name_en']  // show other labels normally
+                ]);
             }
-        });
-
-        map.addLayer({
-            'id': 'western-sahara-mask',
-            'type': 'fill',
-            'source': 'western-sahara',
-            'paint': {
-                'fill-color': '#e6ccb3',  // Lighter desert sand color
-                'fill-opacity': 0.9
-            }
-        });
+        }
     });
 
     // Function to fetch weather data
