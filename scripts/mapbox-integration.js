@@ -70,9 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'line-cap': 'round'
             },
             'paint': {
-                'line-color': '#FF0000',
-                'line-width': 3,
-                'line-opacity': 0.8
+                'line-color': '#2E5A88',
+                'line-width': 4,
+                'line-opacity': 0.9,
+                'line-dasharray': [2, 1]
             }
         });
 
@@ -134,9 +135,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const popupContent = `
                 <div class="popup-content">
-                    <h3>${stop.name}</h3>
-                    <div class="day-number">Jour ${stop.day}</div>
-                    <div class="description">${stop.description}</div>
+                    <div class="popup-header">
+                        <div class="day-badge">Jour ${stop.day}</div>
+                        <h3>${stop.name}</h3>
+                    </div>
+                    <div class="popup-divider"></div>
+                    <div class="description">
+                        <i class="fas fa-info-circle"></i>
+                        ${stop.description}
+                    </div>
                 </div>
             `;
             
