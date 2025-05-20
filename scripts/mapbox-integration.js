@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'line-cap': 'round'
             },
             'paint': {
-                'line-color': '#00A693',
+                'line-color': '#006B5A',
                 'line-width': 4,
                 'line-opacity': 0.9,
                 'line-dasharray': [2, 1]
