@@ -18,6 +18,24 @@ document.addEventListener('DOMContentLoaded', () => {
         bearing: 0
     });
 
+    // Add custom style layer to hide Western Sahara
+    map.on('style.load', () => {
+        map.addLayer({
+            id: 'country-boundaries',
+            source: {
+                type: 'vector',
+                url: 'mapbox://mapbox.country-boundaries-v1'
+            },
+            'source-layer': 'country_boundaries',
+            type: 'fill',
+            paint: {
+                'fill-color': '#000000',
+                'fill-opacity': 1
+            },
+            filter: ['==', ['get', 'iso_3166_1'], 'ESH']
+        });
+    });
+
     // Add navigation controls to the left side
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
