@@ -8,37 +8,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize the Map with Globe Projection
     mapboxgl.accessToken = mapboxToken;
-    const map = new mapboxgl.Map({
-        container: 'globe-container',
-        style: 'mapbox://styles/mapbox/satellite-streets-v12',
-        projection: 'globe',
-        center: [0, 20],
-        zoom: 1.8,
-        pitch: 0,
-        bearing: 0
-    });
+    // Load custom style that excludes Western Sahara
+    fetch('mapbox://styles/mapbox/satellite-streets-v12')
+        .then(response => response.json())
+        .then(style => {
+            // Modify the style to exclude Western Sahara
+            if (style.layers) {
+                style.layers.forEach(layer => {
+                    if (layer.filter) {
+                        layer.filter = ['all', layer.filter, ['!=', ['get', 'name_en'], 'Western Sahara']];
+                    } else {
+                        layer.filter = ['!=', ['get', 'name_en'], 'Western Sahara'];
+                    }
+                });
+            }
 
-    // Add custom style layer to hide Western Sahara
-    map.on('style.load', () => {
-        map.addLayer({
-            id: 'country-boundaries',
-            source: {
-                type: 'vector',
-                url: 'mapbox://mapbox.country-boundaries-v1'
-            },
-            'source-layer': 'country_boundaries',
-            type: 'fill',
-            paint: {
-                'fill-color': '#000000',
-                'fill-opacity': 1
-            },
-            filter: ['==', ['get', 'iso_3166_1'], 'ESH']
+            // Initialize map with modified style
+            const map = new mapboxgl.Map({
+                container: 'globe-container',
+                style: style,
+                projection: 'globe',
+                center: [0, 20],
+                zoom: 1.8,
+                pitch: 0,
+                bearing: 0
+            });
+
+            // Add a mask layer for Western Sahara
+            map.on('load', () => {
+                map.addSource('western-sahara', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Polygon',
+                            'coordinates': [[
+                                [-17.0634, 27.6666],
+                                [-8.6656, 27.6666],
+                                [-8.6656, 20.7666],
+                                [-17.0634, 20.7666],
+                                [-17.0634, 27.6666]
+                            ]]
+                        }
+                    }
+                });
+
+                map.addLayer({
+                    'id': 'western-sahara-mask',
+                    'type': 'fill',
+                    'source': 'western-sahara',
+                    'paint': {
+                        'fill-color': '#d4af37',  // Desert sand color
+                        'fill-opacity': 1
+                    }
+                });
+            });
+
+            // Add navigation controls to the left side
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
         });
-    });
-
-    // Add navigation controls to the left side
-    map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-    map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
 
     // Function to fetch weather data
     async function getWeatherData(lat, lng) {
