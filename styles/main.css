@@ -694,6 +694,20 @@ body {
 }
 
 /* Weather Section in Popup */
+.location-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.weather-description {
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(45, 45, 45, 0.5);
+    border-radius: 12px;
+}
+
 .weather-section {
     margin: 15px 0;
     padding: 10px;

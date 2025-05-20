@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     temperatureDisplay.textContent = `${Math.round(data.main.temp)}°C`;
                     
                     weatherDetails.innerHTML = `
+                        <div class="location-name">${data.name}, ${data.sys.country}</div>
                         <div class="weather-description">${data.weather[0].description}</div>
                         <div><span>Feels like:</span> <span>${Math.round(data.main.feels_like)}°C</span></div>
                         <div><span>Humidity:</span> <span>${data.main.humidity}%</span></div>
