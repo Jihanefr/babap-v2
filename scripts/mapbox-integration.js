@@ -22,8 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
 
-    // Hide Western Sahara label when the map loads
+    // Hide Western Sahara label and add Algeria trip route when the map loads
     map.on('load', () => {
+        // Hide Western Sahara label
         const layers = map.getStyle().layers;
         for (const layer of layers) {
             if (layer.type === 'symbol') {
@@ -35,6 +36,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]);
             }
         }
+
+        // Add the route coordinates
+        map.addSource('route', {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': [
+                        [2.3522, 48.8566], // Paris
+                        [3.0588, 36.7538], // Alger
+                        [2.1978, 36.6769], // Cherchell
+                        [2.4419, 36.5892], // Tipaza
+                        [3.0588, 36.7538], // Back to Alger
+                        [9.4916, 24.5536], // Djanet
+                        [9.5000, 24.5000], // Tilalen (approximate)
+                        [9.4500, 24.5000], // Essendilène (approximate)
+                        [9.4000, 24.4500]  // Erg Admer (approximate)
+                    ]
+                }
+            }
+        });
+
+        // Add a line layer for the route
+        map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#FF0000',
+                'line-width': 3,
+                'line-opacity': 0.8
+            }
+        });
+
+        // Add markers for each stop
+        const stops = [
+            { coordinates: [3.0588, 36.7538], name: 'Alger' },
+            { coordinates: [2.1978, 36.6769], name: 'Cherchell' },
+            { coordinates: [2.4419, 36.5892], name: 'Tipaza' },
+            { coordinates: [9.4916, 24.5536], name: 'Djanet' },
+            { coordinates: [9.5000, 24.5000], name: 'Tilalen' },
+            { coordinates: [9.4500, 24.5000], name: 'Essendilène' },
+            { coordinates: [9.4000, 24.4500], name: 'Erg Admer' }
+        ];
+
+        stops.forEach(stop => {
+            const marker = document.createElement('div');
+            marker.className = 'marker';
+            
+            new mapboxgl.Marker(marker)
+                .setLngLat(stop.coordinates)
+                .setPopup(new mapboxgl.Popup().setHTML(`<h3>${stop.name}</h3>`))
+                .addTo(map);
+        });
     });
 
     // Function to fetch weather data

@@ -693,6 +693,32 @@ body {
     fill-opacity: 0.3 !important;
 }
 
+/* Route Markers */
+.marker {
+    background-color: #FF0000;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+}
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    padding: 10px;
+}
+
+.mapboxgl-popup-content h3 {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+}
+
 /* Weather Section in Popup */
 .location-name {
     font-size: 1.2em;
