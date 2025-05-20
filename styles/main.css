@@ -503,17 +503,17 @@ body {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    padding: 10px;
+    background: #008f84;
+    padding: 15px;
+    border-radius: 15px;
     z-index: 1000;
-    width: auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    font-size: 0.85em;
+    min-width: 200px;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #weather-info h3 {
-    color: black;
+    color: white;
     margin-bottom: 10px;
     font-size: 1.1em;
 }
@@ -698,14 +698,15 @@ body {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #fff;
+    color: #000;
 }
 
 .weather-description {
     margin: 15px 0;
     padding: 10px;
-    background: rgba(45, 45, 45, 0.5);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
+    color: #000;
 }
 
 .weather-section {
