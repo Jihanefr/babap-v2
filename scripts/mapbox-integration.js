@@ -83,49 +83,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 coordinates: [2.3522, 48.8566],
                 name: "Paris",
                 day: "1",
-                description: "Départ pour Alger"
+                description: "Departure to Algiers"
             },
             { 
                 coordinates: [3.0588, 36.7538],
-                name: "Alger",
+                name: "Algiers",
                 day: "1-4",
-                description: "Jour 1: Arrivée et découverte de la ville<br>Jour 2: Visite de la Kasbah, Palais de la Régence, Mosquée Ketchaoua<br>Jour 4: Visite du Mémorial des Martyrs, Jardin d'Essai du Hamma, Musée National des Beaux-Arts"
+                description: "Day 1: Arrival and city exploration<br>Day 2: Visit to the Kasbah, Regency Palace, Ketchaoua Mosque<br>Day 4: Visit to the Martyrs' Memorial, El Hamma Garden, National Museum of Fine Arts"
             },
             { 
                 coordinates: [2.1978, 36.6769],
                 name: "Cherchell",
                 day: "3",
-                description: "Exploration du parc archéologique: théâtre antique, forum, thermes et musée"
+                description: "Exploration of the archaeological park: ancient theater, forum, thermal baths and museum"
             },
             { 
                 coordinates: [2.4419, 36.5892],
                 name: "Tipaza",
                 day: "3",
-                description: "Site UNESCO avec vestiges romains: temples, théâtre, forum, basilique chrétienne. Visite de la Villa des Fresques"
+                description: "UNESCO site with Roman ruins: temples, theater, forum, Christian basilica. Visit to the Villa of Frescoes"
             },
             { 
                 coordinates: [9.4916, 24.5536],
                 name: "Djanet",
                 day: "5",
-                description: "Découverte du marché local: bijoux touaregs, étoffes traditionnelles et épices"
+                description: "Explore the local market: Tuareg jewelry, traditional fabrics and spices"
             },
             { 
                 coordinates: [9.5000, 24.5000],
                 name: "Tilalen",
                 day: "5",
-                description: "Expédition en 4x4, site archéologique avec gravures rupestres"
+                description: "4x4 expedition, archaeological site with rock engravings"
             },
             { 
                 coordinates: [9.4500, 24.5000],
-                name: "Essendilène",
+                name: "Essendilene",
                 day: "6",
-                description: "Randonnée aux guelta (bassins naturels) entourés de falaises majestueuses"
+                description: "Hike to the guelta (natural pools) surrounded by majestic cliffs"
             },
             { 
                 coordinates: [9.4000, 24.4500],
                 name: "Erg Admer",
                 day: "6",
-                description: "Mer de dunes à perte de vue, coucher de soleil et nuit sous les étoiles"
+                description: "Endless sea of dunes, sunset viewing and night under the stars"
             }
         ];
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const popupContent = `
                 <div class="popup-content">
                     <div class="popup-header">
-                        <div class="day-badge">Jour ${stop.day}</div>
+                        <div class="day-badge">Day ${stop.day}</div>
                         <h3>${stop.name}</h3>
                     </div>
                     <div class="popup-divider"></div>
