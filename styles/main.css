@@ -695,19 +695,19 @@ body {
 
 /* Route Markers */
 .marker {
-    background-color: #008f84;
+    background-color: #00A693;
     border: 3px solid #FFFFFF;
     border-radius: 50%;
     cursor: pointer;
     width: 16px;
     height: 16px;
-    box-shadow: 0 0 10px rgba(0, 143, 132, 0.4);
+    box-shadow: 0 0 10px rgba(0, 166, 147, 0.4);
     transition: all 0.3s ease;
 }
 
 .marker:hover {
     transform: scale(1.2);
-    box-shadow: 0 0 15px rgba(0, 143, 132, 0.6);
+    box-shadow: 0 0 15px rgba(0, 166, 147, 0.6);
 }
 
 .mapboxgl-popup {
@@ -727,7 +727,7 @@ body {
 }
 
 .popup-header {
-    background: #008f84;
+    background: #00A693;
     padding: 15px;
     color: white;
     position: relative;
@@ -744,7 +744,7 @@ body {
 .day-badge {
     display: inline-block;
     background: #FFFFFF;
-    color: #008f84;
+    color: #00A693;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 13px;
@@ -754,7 +754,7 @@ body {
 
 .popup-divider {
     height: 3px;
-    background: linear-gradient(to right, #008f84, #00bfb3);
+    background: linear-gradient(to right, #00A693, #00C4AE);
 }
 
 .description {
@@ -762,11 +762,11 @@ body {
     font-size: 14px;
     line-height: 1.6;
     color: #4A4A4A;
-    background: #f9fffd;
+    background: #F8FFFD;
 }
 
 .description i {
-    color: #008f84;
+    color: #00A693;
     margin-right: 8px;
 }
 
