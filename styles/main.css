@@ -1915,15 +1915,53 @@ body {
 
 @media (max-width: 768px) {
     .trips {
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .trips h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
     }
 
     .trip-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+
+    .trip-card {
+        max-width: 100%;
+        margin: 0 auto;
     }
 
     .trip-card img {
-        height: 200px;
+        height: 180px;
+    }
+
+    .trip-content {
+        padding: 1rem;
+    }
+
+    .trip-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .trip-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .trip-content .price {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .btn-explore {
+        width: 100%;
+        text-align: center;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
     }
 }
 
